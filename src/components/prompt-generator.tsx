@@ -39,7 +39,7 @@ export function PromptGenerator() {
   return (
     <div className="container mx-auto py-12 px-4 md:px-6">
       <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Craft the Perfect Visual</h2>
+        <h2 className="text-3xl md:text-4xl font-headline font-bold text-foreground">Craft the Perfect Visual</h2>
         <p className="mt-4 text-lg text-muted-foreground">
           Enter a concept, pick a style, and let AI generate detailed prompts for your next masterpiece.
         </p>
@@ -52,7 +52,7 @@ export function PromptGenerator() {
               id="concept"
               name="concept"
               placeholder="e.g., A majestic lion wearing a crown in a futuristic city"
-              className="min-h-[120px] text-base bg-secondary/50 border-border focus:ring-accent"
+              className="min-h-[120px] text-base bg-background border-border focus:ring-ring"
               required
             />
         </div>
@@ -63,7 +63,7 @@ export function PromptGenerator() {
               id="subject"
               name="subject"
               placeholder="e.g., A man with short brown hair and a beard, wearing glasses."
-              className="min-h-[80px] text-base bg-secondary/50 border-border focus:ring-accent"
+              className="min-h-[80px] text-base bg-background border-border focus:ring-ring"
             />
         </div>
 
@@ -150,10 +150,10 @@ export function PromptGenerator() {
             </div>
             <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
               {state.variations.map((prompt, index) => (
-                <Card key={index} className="flex flex-col bg-card/80 border-primary/20 shadow-lg hover:shadow-primary/20 transition-shadow duration-300">
+                <Card key={index} className="flex flex-col bg-card border-border shadow-lg hover:shadow-primary/20 transition-shadow duration-300">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg text-primary-foreground/90">
-                      <Sparkles className="w-5 h-5 text-accent" />
+                    <CardTitle className="flex items-center gap-2 text-lg text-foreground/90">
+                      <Sparkles className="w-5 h-5 text-primary" />
                       Variation {index + 1}
                     </CardTitle>
                   </CardHeader>
@@ -161,7 +161,7 @@ export function PromptGenerator() {
                     <p className="text-muted-foreground">{prompt}</p>
                   </CardContent>
                   <CardFooter className="bg-secondary/20 justify-end py-3 px-6">
-                    <CopyButton textToCopy={prompt} className="hover:bg-accent/20" />
+                    <CopyButton textToCopy={prompt} className="hover:bg-primary/20" />
                   </CardFooter>
                 </Card>
               ))}
