@@ -15,6 +15,7 @@ import {z} from 'genkit';
 
 const GeneratePromptVariationsInputSchema = z.object({
   concept: z.string().describe('A basic idea or subject for the desired image.'),
+  subject: z.string().describe('A description of the person in the scene.').optional(),
 });
 export type GeneratePromptVariationsInput = z.infer<
   typeof GeneratePromptVariationsInputSchema
@@ -35,7 +36,17 @@ const prompt = ai.definePrompt({
   name: 'generatePromptVariationsPrompt',
   input: {schema: GeneratePromptVariationsInputSchema},
   output: {schema: GeneratePromptVariationsOutputSchema},
-  prompt: `You are a creative AI image prompt generator designed to help users craft detailed prompts for Gemini. Generate multiple prompt variations based on the user's input concept, artistic styles, composition, lighting, color scheme, and technical keywords. Use a sleek, dark theme with deep purples, blues, and vibrant neon accents.
+  prompt: `You are a creative AI image prompt generator designed to help users craft detailed prompts for Gemini.
+Your goal is to generate multiple (three) detailed and distinct prompt variations based on a user's input.
+
+You need to consider the following:
+- The user's core concept.
+- An optional description of a person to be featured in the scene.
+- An optional artistic style.
+- Other elements like composition, lighting, color scheme, and technical keywords.
+
+If the user provides a description of the subject (themselves), you must incorporate it into the prompt.
+Crucially, you must also intelligently suggest an appropriate outfit for the subject that matches the scene's mood, weather, and overall context.
 
 Here are a few ready-to-customize prompt templates:
 
@@ -52,8 +63,11 @@ Sci-Fi / Futuristic Vibe
 "futuristic cityscape, ambient blue lighting, strong shadows, bleach bypass effect, fine film grain, high contrast, cinematic color grade"
 
 Generate three distinct prompt variations for the following concept:
-
-{{concept}}`,
+Concept: {{concept}}
+{{#if subject}}
+Subject Description: {{subject}}
+{{/if}}
+`,
 });
 
 const generatePromptVariationsFlow = ai.defineFlow(

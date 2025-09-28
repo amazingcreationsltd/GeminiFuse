@@ -9,12 +9,14 @@ export interface FormState {
   errors?: {
     concept?: string[];
     style?: string[];
+    subject?: string[];
   };
 }
 
 const schema = z.object({
   concept: z.string().min(3, { message: 'Please enter a concept with at least 3 characters.' }),
   style: z.string().optional(),
+  subject: z.string().optional(),
 });
 
 export async function createPrompts(
@@ -24,6 +26,7 @@ export async function createPrompts(
   const validatedFields = schema.safeParse({
     concept: formData.get('concept'),
     style: formData.get('style'),
+    subject: formData.get('subject'),
   });
 
   if (!validatedFields.success) {
@@ -34,11 +37,11 @@ export async function createPrompts(
     };
   }
 
-  const { concept, style } = validatedFields.data;
+  const { concept, style, subject } = validatedFields.data;
   const fullConcept = style ? `${concept} in a ${style} style` : concept;
 
   try {
-    const variations = await generatePromptVariations({ concept: fullConcept });
+    const variations = await generatePromptVariations({ concept: fullConcept, subject: subject || '' });
     if (variations && variations.length > 0) {
       return { variations, message: null };
     }

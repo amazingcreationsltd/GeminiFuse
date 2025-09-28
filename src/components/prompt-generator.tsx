@@ -57,6 +57,16 @@ export function PromptGenerator() {
             />
         </div>
 
+        <div className="grid gap-2">
+            <label htmlFor="subject" className="font-medium text-lg">Describe yourself (optional)</label>
+            <Textarea
+              id="subject"
+              name="subject"
+              placeholder="e.g., A man with short brown hair and a beard, wearing glasses."
+              className="min-h-[80px] text-base bg-secondary/50 border-border focus:ring-accent"
+            />
+        </div>
+
         <div className="grid gap-4">
             <h3 className="font-medium text-lg">Choose an artistic style (optional)</h3>
             <input type="hidden" name="style" value={selectedStyle || ''} />
@@ -85,6 +95,15 @@ export function PromptGenerator() {
                 <AlertTitle>Input Error</AlertTitle>
                 <AlertDescription>
                     {state.errors.concept[0]}
+                </AlertDescription>
+            </Alert>
+        )}
+         {state?.errors?.subject && !isPending && (
+            <Alert variant="destructive">
+                <Terminal className="h-4 w-4" />
+                <AlertTitle>Input Error</AlertTitle>
+                <AlertDescription>
+                    {state.errors.subject[0]}
                 </AlertDescription>
             </Alert>
         )}
